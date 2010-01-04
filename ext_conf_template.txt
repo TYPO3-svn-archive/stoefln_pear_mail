@@ -1,0 +1,14 @@
+  # cat=basic/string; type=string; label=Host for sending mails
+smtpServer = 
+
+  # cat=basic/string; type=string; label=Port for sending mails: (default 25)
+smtpPort = 
+
+  # cat=basic/string; type=string; label=User for SMTP-authentication
+smtpUser = 
+
+  # cat=basic/string; type=string; label=Password for SMTP-authentication
+smtpPassword = 
+
+  # cat=basic/string; type=boolean; label=Debug SMTP communication protocoll
+smtpDebug = 
