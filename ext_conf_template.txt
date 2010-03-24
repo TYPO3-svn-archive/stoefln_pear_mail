@@ -1,7 +1,7 @@
-  # cat=basic/string; type=string; label=Host for sending mails
+  # cat=basic/string; type=string; label=Host for sending mails: (e.g. "mail.gmx.net")
 smtpServer = 
 
-  # cat=basic/string; type=string; label=Port for sending mails: (default 25)
+  # cat=basic/string; type=string; label=Port for sending mails: (default 25, for gmail use 587)
 smtpPort = 
 
   # cat=basic/string; type=string; label=User for SMTP-authentication
