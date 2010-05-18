@@ -1,7 +1,14 @@
 <?php
+
+require_once t3lib_extMgm::extPath('stoefln_pear_mail').'lib/class.pearmail.php';
+
 class ux_t3lib_htmlmail extends t3lib_htmlmail{
 
-
+    /**
+     *
+     * @var pearmail
+     */
+    private $pearmail;
 	/**
 	* Adds a header to the mail. Use this AFTER the setHeaders()-function
 	*
@@ -103,50 +110,21 @@ class ux_t3lib_htmlmail extends t3lib_htmlmail{
 	public function mail($to,$subject,$message,$headers=array())
 	{
 
-		require_once('Mail.php');
-
-		// loading the extension configuration
-		$smtpUser 		= $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpUser'];
-		$smtpPassword	= $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpPassword'];
-		$smtpServer		= $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpServer'];
-		$smtpPort		= $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpPort'];
-		$smtpDebug		= $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpDebug'];
-
-		$headers = $this->headerArr;
-  
-		$headers['To']		= $to;
+        $headers = $this->headerArr;
+		$headers['To']          = $to;
 		$headers['Subject'] 	= $subject;
-
 		$headers['Content-Transfer-Encoding'] = $this->alt_base64 ? 'base64' : 'quoted-printable';
 
-		$body = $message;
+        $this->pearmail = t3lib_div::makeInstance('pearmail');
+        // loading the extension configuration
+        $this->pearmail->setUsername($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpUser']);
+        $this->pearmail->setPassword($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpPassword']);
+        $this->pearmail->setAuth(true);
+        $this->pearmail->setHost($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpServer']);
+        $this->pearmail->setPort($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpPort']);
+        $this->pearmail->setDebug($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpDebug']);
 
-		$params = array(
-					'host' 		=> $smtpServer,
-					'port' 		=> $smtpPort ? $smtpPort : 25,
-					'auth' 		=> true,
-					'username' 	=> $smtpUser,
-					'password' 	=> $smtpPassword,
-					'debug' 	=> $smtpDebug,
-					);
-
-		// Create the mail object using the Mail::factory method
-		$mail_object =& Mail::factory('smtp', $params);
- 		if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpDebug']) t3lib_div::debug(Array('stoefln_pear_mail/htmlmail obj='=>$mail_object, '$params'=>$params, 'File:Line'=>__FILE__.':'.__LINE__));
-		$mail_object->send($to, $headers, $body);
-
-		if (PEAR::isError($mail_object)) {
-            if ($smtpDebug){
-                t3lib_div::debug(Array('stoefln_pear_mail/htmlmail'=>'PEAR::isError($mail_object) !!!!!!!!!!!!!!!!', 'File:Line'=>__FILE__.':'.__LINE__));
-            }
-            t3lib_div::debug($mail_object->getMessage());
-            $error = true;
-
-        } else {
-            $error = false;
-        };
-		return !$error;
-
+        return $this->pearmail->send($to, $subject, $message, $headers);
 	}
 
 }

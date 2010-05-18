@@ -12,5 +12,7 @@ $TYPO3_CONF_VARS['FE']['XCLASS']['t3lib/class.t3lib_htmlmail.php'] = t3lib_extMg
 $TYPO3_CONF_VARS['BE']['XCLASS']['t3lib/class.t3lib_htmlmail.php'] = t3lib_extMgm::extPath($_EXTKEY)."class.ux_t3lib_htmlmail.php";
 $TYPO3_CONF_VARS['FE']['XCLASS']['t3lib/class.t3lib_formmail.php'] = t3lib_extMgm::extPath($_EXTKEY)."class.ux_t3lib_formmail.php";
 $TYPO3_CONF_VARS['BE']['XCLASS']['t3lib/class.t3lib_formmail.php'] = t3lib_extMgm::extPath($_EXTKEY)."class.ux_t3lib_formmail.php";
+$TYPO3_CONF_VARS['FE']['XCLASS']['t3lib/class.t3lib_div.php'] = t3lib_extMgm::extPath($_EXTKEY)."class.ux_t3lib_div.php";
+$TYPO3_CONF_VARS['BE']['XCLASS']['t3lib/class.t3lib_div.php'] = t3lib_extMgm::extPath($_EXTKEY)."class.ux_t3lib_div.php";
 
 ?>
