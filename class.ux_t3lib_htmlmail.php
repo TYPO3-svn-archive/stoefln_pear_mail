@@ -115,15 +115,17 @@ class ux_t3lib_htmlmail extends t3lib_htmlmail{
 		$headers['Subject'] 	= $subject;
 		$headers['Content-Transfer-Encoding'] = $this->alt_base64 ? 'base64' : 'quoted-printable';
 
-        $this->pearmail = t3lib_div::makeInstance('pearmail');
-        // loading the extension configuration
+        $pearmail = t3lib_div::makeInstance('pearmail');
+        /* var $pearmail pearmail */
+		$this->pearmail = $pearmail;
+		// loading the extension configuration
         $this->pearmail->setUsername($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpUser']);
         $this->pearmail->setPassword($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpPassword']);
         $this->pearmail->setAuth(true);
         $this->pearmail->setHost($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpServer']);
         $this->pearmail->setPort($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpPort']);
         $this->pearmail->setDebug($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpDebug']);
-
+		$this->pearmail->setLocalhost($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['stoefln_pear_mail']['smtpLocalhost']);
         return $this->pearmail->send($to, $subject, $message, $headers);
 	}
 

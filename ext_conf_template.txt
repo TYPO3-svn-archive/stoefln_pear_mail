@@ -10,5 +10,10 @@ smtpUser =
   # cat=basic/string; type=string; label=Password for SMTP-authentication
 smtpPassword = 
 
-  # cat=basic/string; type=boolean; label=Debug SMTP communication protocoll
+  # cat=basic/string; type=string; label=Local host address: (this servers puplic address. default: php environment var $_SERVER['HTTP_HOST'])
+smtpLocalhost =
+
+  # cat=basic/string; type=boolean; label=Debug SMTP communication protocoll: 
 smtpDebug = 
+
+

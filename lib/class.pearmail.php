@@ -12,19 +12,24 @@ class pearmail{
     private $username;
     private $password;
     private $host;
+	private $localhost = '127.0.0.1';
 
     public function getHost() {
         return $this->host;
     }
 
     /**
-     * sets the host address (e.g. mail.gmx.net)
+     * sets the mail server host address (e.g. mail.gmx.net)
      * @param <type> $host
      */
     public function setHost($host) {
         $this->host = $host;
     }
 
+	/**
+	 * gets the mail server host address (e.g. mail.gmx.net)
+	 * @return <type>
+	 */
     public function getDebug() {
         return $this->debug;
     }
@@ -73,6 +78,22 @@ class pearmail{
         $this->password = $password;
     }
 
+	/**
+	 * gets the address of the the client host
+	 * @return <type> 
+	 */
+	public function getLocalhost() {
+	 return $this->localhost;
+	}
+
+	/**
+	 * sets the address of the the client host
+	 * @param <type> $localhost
+	 */
+	public function setLocalhost($localhost) {
+	 $this->localhost = $localhost;
+	}
+
 
     /**
      * finally sends the mail
@@ -90,6 +111,7 @@ class pearmail{
 					'username' 	=> $this->getUsername(),
 					'password' 	=> $this->getPassword(),
 					'debug' 	=> $this->getDebug(),
+					'localhost' => $this->getLocalhost(),
 					);
 
 		// Create the mail object using the Mail::factory method
